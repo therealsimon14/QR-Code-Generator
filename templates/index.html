@@ -5,75 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="title">
-        <h1>QR Code Generator</h1>
-        <h2>Insert a link below to generate a QR code.</h2>
-    </div>
-    <form action="/" method="POST">
-        <input type="text" name="link">
-        <button type="submit">Generate QR</button>
-    </form>
-    <div class="generated">
-        <img src="{{data}}" alt="">
+    <div class="container">
+        <div class="title">
+            <h1>QR Code Generator</h1>
+            <h2>Insert a link below to generate a QR code.</h2>
+        </div>
+        <form action="/" method="POST">
+            <input type="text" name="link" required>
+            <button type="submit">Generate QR</button>
+        </form>
+        <div class="generated">
+            <img id="qrCodeImage" src="{{data}}" alt="" style="display: {{ 'block' if data else 'none' }};">
+            {% if data %}
+                <a id="downloadLink" class="download-button" href="{{data}}" download="qrcode.png">Download QR Code</a>
+            {% endif %}
+        </div>
     </div>
 </body>
 </html>
 
 <style>
     * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html,
-body {
-    margin: 0rem 10rem;
-    font-family: "Poppins", sans-serif;
-}
-.title {
-    padding: 6rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    justify-content: center;
-    align-items: center;
-    color: rgb(37, 37, 37);
-}
-
-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-}
-
-form input {
-    font-size: 1.2rem;
-    padding: 0.5rem 1rem;
-    width: 50%;
-    background: black;
-    color: white; 
-    border: none;
-}
-
-form button {
-    font-size: 1rem;
-    background: rgb(41, 64, 121);
-    border: none;
-    color: white;
-    padding: 1rem 1.5rem;
-    cursor: pointer;
-    border-radius: 0.5rem;
-}
-.generated {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    html, body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background-image: url('https://images.pexels.com/photos/1631677/pexels-photo-1631677.jpeg');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .container {
+        background: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        width: 80%;
+        max-width: 600px;
+    }
+    
+    .title h1, .title h2 {
+        margin-bottom: 1.5rem;
+    }
+    
+    form {
+        margin-top: 1.5rem;
+    }
+    
+    form input {
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+        width: calc(100% - 4rem);
+        background: black;
+        color: white; 
+        border: none;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem; /* Added margin to create space between input and button */
+    }
+    
+    form button {
+        font-size: 1rem;
+        background: rgb(41, 64, 121);
+        border: none;
+        color: white;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 0.5rem;
+    }
+    
+    .generated {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center content horizontally */
+    }
+    
+    .generated img {
+        max-width: 100%;
+        border: 2px solid rgb(41, 64, 121);
+        border-radius: 0.5rem;
+    }
+    
+    .download-button {
+        display: inline-block;
+        background: rgb(41, 64, 121);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 0.3rem;
+        text-decoration: none;
+        margin-top: 1rem;
+    }           
 </style>
