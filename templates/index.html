@@ -1,25 +1,119 @@
+<!-- define document as html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code</title>
+    <!-- import the "Poppins" font from google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- CSS Starts -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* sets font family for entire document to be "poppins", sets background image to royalty-free
+         image and makes it cover the whole page, makes content on page centered. */
+        html, body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background-image: url('https://images.pexels.com/photos/1631677/pexels-photo-1631677.jpeg');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* sets background behind content to be a slightly transparent white background
+         creates a shadow, and aligns the text in the center */
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0);
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+        
+        .title h1, .title h2 {
+            margin-bottom: 1.5rem;
+        }
+        
+        form {
+            margin-top: 1.5rem;
+        }
+        
+        form input {
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            width: calc(100% - 4rem);
+            background: black;
+            color: white; 
+            border: none;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem; /* Added margin to create space between input and button */
+        }
+        /* styling for generate button */
+        form button {
+            font-size: 1rem;
+            background: rgb(41, 64, 121);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+        }
+        
+        .generated {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .generated img {
+            max-width: 100%;
+            border: 2px solid rgb(41, 64, 121);
+            border-radius: 0.5rem;
+        }
+        
+        .download-button {
+            display: inline-block;
+            background: rgb(41, 64, 121);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 0.3rem;
+            text-decoration: none;
+            margin-top: 1rem;
+        }           
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="title">
+            <!-- create title -->
             <h1>QR Code Generator</h1>
             <h2>Insert a link below to generate a QR code.</h2>
         </div>
+        <!-- form to input url and button to submit, forms method is set to POST so it can communicate with the flask program -->
         <form action="/" method="POST">
             <input type="text" name="link" required>
             <button type="submit">Generate QR</button>
         </form>
         <div class="generated">
+            <!-- displays the generated qr code. src for image is data, (the variable from the flask program) -->
             <img id="qrCodeImage" src="{{data}}" alt="" style="display: {{ 'block' if data else 'none' }};">
+            <!-- download button to download "qrcode.png" -->
             {% if data %}
                 <a id="downloadLink" class="download-button" href="{{data}}" download="qrcode.png">Download QR Code</a>
             {% endif %}
@@ -27,89 +121,3 @@
     </div>
 </body>
 </html>
-
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    
-    html, body {
-        margin: 0;
-        font-family: "Poppins", sans-serif;
-        background-image: url('https://images.pexels.com/photos/1631677/pexels-photo-1631677.jpeg');
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .container {
-        background: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
-        border-radius: 1rem;
-        padding: 2rem;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-        text-align: center;
-        width: 80%;
-        max-width: 600px;
-    }
-    
-    .title h1, .title h2 {
-        margin-bottom: 1.5rem;
-    }
-    
-    form {
-        margin-top: 1.5rem;
-    }
-    
-    form input {
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem;
-        width: calc(100% - 4rem);
-        background: black;
-        color: white; 
-        border: none;
-        border-radius: 0.5rem;
-        margin-bottom: 1rem; /* Added margin to create space between input and button */
-    }
-    
-    form button {
-        font-size: 1rem;
-        background: rgb(41, 64, 121);
-        border: none;
-        color: white;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        border-radius: 0.5rem;
-    }
-    
-    .generated {
-        margin-top: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* Center content horizontally */
-    }
-    
-    .generated img {
-        max-width: 100%;
-        border: 2px solid rgb(41, 64, 121);
-        border-radius: 0.5rem;
-    }
-    
-    .download-button {
-        display: inline-block;
-        background: rgb(41, 64, 121);
-        color: white;
-        border: none;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        border-radius: 0.3rem;
-        text-decoration: none;
-        margin-top: 1rem;
-    }           
-</style>
